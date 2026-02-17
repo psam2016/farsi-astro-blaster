@@ -36,12 +36,23 @@ Farsi Astro Blaster is an educational arcade game that combines fast-paced actio
 4. Correct answers destroy the asteroid and award points
 5. Build combos (up to 5x multiplier) for consecutive correct answers
 6. Don't let asteroids reach the bottom - you lose a life!
-7. Game over when you run out of all 3 lives
+7. Level up every 5 asteroids destroyed - difficulty increases gradually
+8. Game over when you run out of all 3 lives
+
+### Level System
+The game features progressive difficulty across multiple levels:
+
+- **Level 1**: Tutorial - 1 asteroid at a time, very slow (5s spawn interval, 0.4 speed)
+- **Level 2**: Still easy - 2 asteroids max, slower (4s spawn, 0.6 speed)
+- **Level 3**: Getting harder - 3 asteroids max, moderate (3s spawn, 0.8 speed)
+- **Level 4**: Normal difficulty - 4 asteroids max (2.5s spawn, 1.0 speed)
+- **Level 5+**: Progressive challenge - increasing speed and asteroid count
 
 ### Scoring System
 - **Base Points**: 10 points per correct answer
 - **Combo Multiplier**: 2x, 3x, 4x, 5x for consecutive correct answers
 - **Example**: 5th correct answer in a row = 50 points!
+- **Level Up**: Destroy 5 asteroids to advance to the next level
 
 ## 📚 Vocabulary List
 
@@ -89,23 +100,25 @@ The game includes 35 carefully selected Farsi words covering various categories:
 
 ### Core Features
 - ✅ **Lives System**: Start with 3 lives
+- ✅ **Level System**: Progressive difficulty with 5+ levels - starts easy and gradually increases
 - ✅ **Combo System**: Build up to 5x point multipliers
-- ✅ **Progressive Difficulty**: Asteroids spawn faster and move quicker as your score increases
+- ✅ **Progressive Difficulty**: Each level introduces more asteroids and faster speeds
 - ✅ **High Score Tracking**: Uses localStorage to save your best score
-- ✅ **Pause Functionality**: Take a break anytime with spacebar or P key
+- ✅ **Pause Functionality**: Take a break anytime with spacebar or P key (won't trigger while typing!)
 
 ### Visual Features
 - 🌌 **Space Theme**: Dark starfield background with animated stars
 - 💥 **Particle Effects**: Colorful explosions when asteroids are destroyed
 - 🎨 **Colorful Asteroids**: Each asteroid has a unique color and rotation
 - 🚀 **Styled Spaceship**: Clean, minimalist spaceship design
-- 📊 **Clear UI**: Score, lives, combo, and high score always visible
+- 📊 **Clear UI**: Level, score, lives, combo, and high score always visible
 
 ### Educational Features
 - 📖 **Comprehensive Vocabulary**: 35 words covering verbs, nouns, and adjectives
 - 🔄 **Repetition**: Words appear randomly for reinforced learning
 - ⚡ **Quick Feedback**: Instant visual feedback on correct/incorrect answers
-- 📈 **Progress Tracking**: Watch your high score improve over time
+- 📈 **Progress Tracking**: Watch your level and high score improve over time
+- 🎓 **Beginner Friendly**: Level 1 starts very slow with only 1 asteroid at a time
 
 ## 🛠️ Technical Details
 

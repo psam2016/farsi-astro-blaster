@@ -82,6 +82,7 @@ let asteroidsDestroyed = 0;
 let highScore = parseInt(localStorage.getItem('farsiAstroHighScore')) || 0;
 let asteroids = [];
 let particles = [];
+let missedWords = new Set(); // Track missed words for word bank
 let lastSpawnTime = 0;
 let spawnInterval = 2000; // milliseconds
 let baseSpeed = 1;

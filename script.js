@@ -9,6 +9,7 @@ const ctx = canvas.getContext('2d');
 // Game Elements
 const answerInput = document.getElementById('answerInput');
 const scoreDisplay = document.getElementById('score');
+const levelDisplay = document.getElementById('level');
 const livesDisplay = document.getElementById('lives');
 const comboDisplay = document.getElementById('combo');
 const highScoreDisplay = document.getElementById('highScore');
@@ -76,6 +77,8 @@ let gameState = 'start'; // start, playing, paused, gameOver
 let score = 0;
 let lives = 3;
 let combo = 0;
+let level = 1;
+let asteroidsDestroyed = 0;
 let highScore = parseInt(localStorage.getItem('farsiAstroHighScore')) || 0;
 let asteroids = [];
 let particles = [];
@@ -311,16 +314,74 @@ function drawSpaceship() {
 }
 
 // ===========================
+// LEVEL & DIFFICULTY MANAGEMENT
+// ===========================
+function updateLevel() {
+    // Level up every 5 asteroids destroyed
+    const newLevel = Math.floor(asteroidsDestroyed / 5) + 1;
+    if (newLevel > level) {
+        level = newLevel;
+        levelDisplay.textContent = level;
+        showFeedback('correct', `Level ${level}! 🎊`);
+    }
+}
+
+function getDifficultySettings() {
+    // Progressive difficulty based on level
+    let settings = {
+        spawnInterval: 4000,  // Default: very slow
+        baseSpeed: 0.5,       // Default: very slow
+        maxAsteroids: 1       // Default: only 1 at a time
+    };
+    
+    if (level === 1) {
+        // Level 1: Tutorial - very easy
+        settings.spawnInterval = 5000;  // 5 seconds between spawns
+        settings.baseSpeed = 0.4;
+        settings.maxAsteroids = 1;
+    } else if (level === 2) {
+        // Level 2: Still easy
+        settings.spawnInterval = 4000;
+        settings.baseSpeed = 0.6;
+        settings.maxAsteroids = 2;
+    } else if (level === 3) {
+        // Level 3: Getting harder
+        settings.spawnInterval = 3000;
+        settings.baseSpeed = 0.8;
+        settings.maxAsteroids = 3;
+    } else if (level === 4) {
+        // Level 4: Moderate
+        settings.spawnInterval = 2500;
+        settings.baseSpeed = 1.0;
+        settings.maxAsteroids = 4;
+    } else {
+        // Level 5+: Progressive difficulty
+        settings.spawnInterval = Math.max(1000, 2500 - ((level - 4) * 200));
+        settings.baseSpeed = 1.0 + ((level - 4) * 0.2);
+        settings.maxAsteroids = Math.min(6, 4 + Math.floor((level - 4) / 2));
+    }
+    
+    return settings;
+}
+
+// ===========================
 // ASTEROID SPAWNING
 // ===========================
 function spawnAsteroid() {
+    const settings = getDifficultySettings();
+    
+    // Don't spawn if we already have max asteroids for current level
+    if (asteroids.length >= settings.maxAsteroids) {
+        return;
+    }
+    
     const word = vocabulary[Math.floor(Math.random() * vocabulary.length)];
     const asteroid = new Asteroid(word);
     asteroids.push(asteroid);
 
-    // Adjust difficulty
-    spawnInterval = Math.max(800, 2000 - (score * 5));
-    baseSpeed = 1 + (score / 1000);
+    // Update difficulty settings based on level
+    spawnInterval = settings.spawnInterval;
+    baseSpeed = settings.baseSpeed;
 }
 
 // ===========================
@@ -345,6 +406,10 @@ function checkAnswer() {
             
             // Remove asteroid
             asteroids.splice(i, 1);
+            
+            // Track destroyed asteroids and update level
+            asteroidsDestroyed++;
+            updateLevel();
             
             // Update score with combo
             combo++;
@@ -410,6 +475,7 @@ function loseLife() {
 // ===========================
 function updateDisplay() {
     scoreDisplay.textContent = score;
+    levelDisplay.textContent = level;
     
     // Update lives display with hearts
     const hearts = '❤️'.repeat(lives);
@@ -435,11 +501,16 @@ function startGame() {
     score = 0;
     lives = 3;
     combo = 0;
+    level = 1;
+    asteroidsDestroyed = 0;
     asteroids = [];
     particles = [];
     lastSpawnTime = 0;
-    spawnInterval = 2000;
-    baseSpeed = 1;
+    
+    // Get initial difficulty settings for level 1
+    const settings = getDifficultySettings();
+    spawnInterval = settings.spawnInterval;
+    baseSpeed = settings.baseSpeed;
     
     // Update display
     updateDisplay();
@@ -527,8 +598,13 @@ answerInput.addEventListener('keypress', (e) => {
     }
 });
 
-// Pause functionality - Spacebar or P key
+// Pause functionality - Spacebar or P key (but not when typing in input)
 document.addEventListener('keydown', (e) => {
+    // Don't trigger pause if user is typing in the input field
+    if (document.activeElement === answerInput) {
+        return;
+    }
+    
     if (e.code === 'Space' || e.key === 'p' || e.key === 'P') {
         if (gameState === 'playing') {
             e.preventDefault();

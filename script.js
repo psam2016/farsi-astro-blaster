@@ -109,6 +109,17 @@ class Asteroid {
         this.color = this.getRandomColor();
         this.rotation = Math.random() * Math.PI * 2;
         this.rotationSpeed = (Math.random() - 0.5) * 0.05;
+        
+        // Pre-calculate shape points for consistent asteroid shape
+        this.shapePoints = [];
+        for (let i = 0; i < 8; i++) {
+            const angle = (i / 8) * Math.PI * 2;
+            const radius = this.radius * (0.8 + Math.random() * 0.4);
+            this.shapePoints.push({
+                x: Math.cos(angle) * radius,
+                y: Math.sin(angle) * radius
+            });
+        }
     }
 
     getRandomColor() {
@@ -131,15 +142,12 @@ class Asteroid {
         ctx.strokeStyle = '#ffffff';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        for (let i = 0; i < 8; i++) {
-            const angle = (i / 8) * Math.PI * 2;
-            const radius = this.radius * (0.8 + Math.random() * 0.4);
-            const x = Math.cos(angle) * radius;
-            const y = Math.sin(angle) * radius;
+        for (let i = 0; i < this.shapePoints.length; i++) {
+            const point = this.shapePoints[i];
             if (i === 0) {
-                ctx.moveTo(x, y);
+                ctx.moveTo(point.x, point.y);
             } else {
-                ctx.lineTo(x, y);
+                ctx.lineTo(point.x, point.y);
             }
         }
         ctx.closePath();

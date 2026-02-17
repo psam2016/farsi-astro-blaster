@@ -71,9 +71,89 @@ const vocabulary = [
 ];
 
 // ===========================
+// SENTENCE DATASET (for advanced levels)
+// ===========================
+const sentences = [
+    { 
+        sentence: "I ___ to the store yesterday",
+        blank: "went",
+        options: [
+            { farsi: "raft", english: "went", note: "past tense, 3rd person" },
+            { farsi: "miram", english: "i go", note: "present tense" },
+            { farsi: "raftan", english: "to go", note: "infinitive" }
+        ]
+    },
+    {
+        sentence: "Please ___ my hand",
+        blank: "take",
+        options: [
+            { farsi: "begir", english: "take", note: "imperative form" },
+            { farsi: "bardār", english: "take", note: "imperative form" },
+            { farsi: "beshkan", english: "break", note: "imperative form" }
+        ]
+    },
+    {
+        sentence: "I ___ the dishes to the kitchen",
+        blank: "carry",
+        options: [
+            { farsi: "mibaram", english: "i carry", note: "present continuous" },
+            { farsi: "miram", english: "i go", note: "present tense" },
+            { farsi: "miāyam", english: "i come", note: "present tense" }
+        ]
+    },
+    {
+        sentence: "Don't ___ your promises",
+        blank: "break",
+        options: [
+            { farsi: "beshkan", english: "break", note: "imperative form" },
+            { farsi: "bezan", english: "hit", note: "imperative form" },
+            { farsi: "bego", english: "say", note: "imperative form" }
+        ]
+    },
+    {
+        sentence: "I need to ___ now",
+        blank: "go",
+        options: [
+            { farsi: "raftan", english: "to go", note: "infinitive verb" },
+            { farsi: "miram", english: "i go", note: "present tense" },
+            { farsi: "raft", english: "went", note: "past tense" }
+        ]
+    },
+    {
+        sentence: "My ___ is full of joy",
+        blank: "heart",
+        options: [
+            { farsi: "del", english: "heart", note: "noun" },
+            { farsi: "dast", english: "hand", note: "noun" },
+            { farsi: "hāl", english: "state", note: "noun" }
+        ]
+    },
+    {
+        sentence: "The ___ is shining bright",
+        blank: "sun",
+        options: [
+            { farsi: "khorshid", english: "sun", note: "noun" },
+            { farsi: "māh", english: "moon", note: "noun" },
+            { farsi: "setāre", english: "star", note: "noun" }
+        ]
+    },
+    {
+        sentence: "I drink ___ every day",
+        blank: "water",
+        options: [
+            { farsi: "āb", english: "water", note: "noun" },
+            { farsi: "bārān", english: "rain", note: "noun" },
+            { farsi: "daryā", english: "sea", note: "noun" }
+        ]
+    }
+];
+
+// ===========================
 // GAME STATE
 // ===========================
 let gameState = 'start'; // start, playing, paused, gameOver
+let gameMode = 'translate'; // 'translate' or 'sentence'
+let currentSentence = null;
 let score = 0;
 let lives = 3;
 let combo = 0;
@@ -329,7 +409,16 @@ function updateLevel() {
     if (newLevel > level) {
         level = newLevel;
         levelDisplay.textContent = level;
-        showFeedback('correct', `Level ${level}! 🎊`);
+        
+        // Switch to sentence mode at level 6
+        if (level >= 6 && gameMode === 'translate') {
+            gameMode = 'sentence';
+            showFeedback('correct', `Level ${level}! 🎊 Sentence Mode!`);
+            showSentenceDisplay();
+            selectNewSentence();
+        } else {
+            showFeedback('correct', `Level ${level}! 🎊`);
+        }
     }
 }
 
@@ -382,13 +471,52 @@ function spawnAsteroid() {
         return;
     }
     
-    const word = vocabulary[Math.floor(Math.random() * vocabulary.length)];
+    let word;
+    if (gameMode === 'sentence' && currentSentence) {
+        // In sentence mode, spawn from the sentence options
+        word = currentSentence.options[Math.floor(Math.random() * currentSentence.options.length)];
+    } else {
+        // In translate mode, spawn from vocabulary
+        word = vocabulary[Math.floor(Math.random() * vocabulary.length)];
+    }
+    
     const asteroid = new Asteroid(word);
     asteroids.push(asteroid);
 
     // Update difficulty settings based on level
     spawnInterval = settings.spawnInterval;
     baseSpeed = settings.baseSpeed;
+}
+
+// ===========================
+// SENTENCE MODE FUNCTIONS
+// ===========================
+function selectNewSentence() {
+    currentSentence = sentences[Math.floor(Math.random() * sentences.length)];
+    displaySentence();
+}
+
+function displaySentence() {
+    const sentenceText = document.getElementById('sentenceText');
+    if (currentSentence) {
+        // Replace the blank with an underlined space
+        const displayText = currentSentence.sentence.replace('___', '<span class="sentence-blank">______</span>');
+        sentenceText.innerHTML = displayText;
+    }
+}
+
+function showSentenceDisplay() {
+    const sentenceDisplay = document.getElementById('sentenceDisplay');
+    const inputLabel = document.getElementById('inputLabel');
+    sentenceDisplay.classList.remove('hidden');
+    inputLabel.textContent = 'Type the Farsi word:';
+}
+
+function hideSentenceDisplay() {
+    const sentenceDisplay = document.getElementById('sentenceDisplay');
+    const inputLabel = document.getElementById('inputLabel');
+    sentenceDisplay.classList.add('hidden');
+    inputLabel.textContent = 'Type English meaning:';
 }
 
 // ===========================
@@ -404,7 +532,17 @@ function checkAnswer() {
     // Check each asteroid for a match
     for (let i = asteroids.length - 1; i >= 0; i--) {
         const asteroid = asteroids[i];
-        if (asteroid.english === answer) {
+        
+        // In sentence mode, check if answer matches Farsi word (user types Farsi)
+        // In translate mode, check if answer matches English (user types English)
+        let isMatch = false;
+        if (gameMode === 'sentence') {
+            isMatch = asteroid.word.toLowerCase() === answer;
+        } else {
+            isMatch = asteroid.english === answer;
+        }
+        
+        if (isMatch) {
             // Correct answer!
             found = true;
             
@@ -425,6 +563,11 @@ function checkAnswer() {
             
             // Show feedback
             showFeedback('correct', `+${points} points!`);
+            
+            // In sentence mode, select a new sentence after correct answer
+            if (gameMode === 'sentence') {
+                selectNewSentence();
+            }
             
             break;
         }
@@ -521,6 +664,11 @@ function startGame() {
     particles = [];
     missedWords = new Set(); // Reset missed words for new game
     lastSpawnTime = 0;
+    gameMode = 'translate'; // Start in translate mode
+    currentSentence = null;
+    
+    // Hide sentence display at start
+    hideSentenceDisplay();
     
     // Get initial difficulty settings for level 1
     const settings = getDifficultySettings();

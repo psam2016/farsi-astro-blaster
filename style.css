@@ -517,3 +517,52 @@ footer a:hover {
 .word-bank::-webkit-scrollbar-thumb:hover {
     background: #00ff88;
 }
+
+/* Sentence Display Styles */
+.sentence-display {
+    margin: 20px auto;
+    padding: 20px;
+    max-width: 800px;
+    background: rgba(0, 0, 0, 0.7);
+    border: 3px solid #ffd700;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    text-align: center;
+}
+
+.sentence-display.hidden {
+    display: none;
+}
+
+.sentence-label {
+    color: #ffd700;
+    font-size: 1em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.sentence-text {
+    color: #ffffff;
+    font-size: 1.8em;
+    font-weight: bold;
+    margin: 15px 0;
+    line-height: 1.4;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.sentence-hint {
+    color: #a0e7ff;
+    font-size: 0.9em;
+    font-style: italic;
+    margin-top: 10px;
+}
+
+.sentence-blank {
+    color: #ffd700;
+    text-decoration: underline;
+    text-decoration-style: double;
+    text-decoration-color: #ffd700;
+    font-weight: bold;
+}

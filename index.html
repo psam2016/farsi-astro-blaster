@@ -38,6 +38,13 @@
             </div>
         </div>
 
+        <!-- Sentence Mode Display (shown only in sentence mode) -->
+        <div id="sentenceDisplay" class="sentence-display hidden">
+            <p class="sentence-label">Complete the sentence:</p>
+            <p class="sentence-text" id="sentenceText"></p>
+            <p class="sentence-hint">Type the Farsi word that fits the blank</p>
+        </div>
+
         <!-- Game Canvas -->
         <div class="canvas-wrapper">
             <canvas id="gameCanvas" width="800" height="600"></canvas>
@@ -92,7 +99,7 @@
 
         <!-- Input Field -->
         <div class="input-container">
-            <label for="answerInput">Type English meaning:</label>
+            <label for="answerInput" id="inputLabel">Type English meaning:</label>
             <input 
                 type="text" 
                 id="answerInput" 

@@ -30,6 +30,8 @@ Farsi Astro Blaster is an educational arcade game that combines fast-paced actio
 - **Click "Start Game"**: Begin a new game
 
 ### Gameplay
+
+**Levels 1-5: Translation Mode**
 1. Asteroids fall from the top of the screen, each labeled with a romanized Farsi word
 2. Type the English meaning in the input field
 3. Press Enter to check your answer
@@ -37,7 +39,17 @@ Farsi Astro Blaster is an educational arcade game that combines fast-paced actio
 5. Build combos (up to 5x multiplier) for consecutive correct answers
 6. Don't let asteroids reach the bottom - you lose a life!
 7. Level up every 5 asteroids destroyed - difficulty increases gradually
-8. Game over when you run out of all 3 lives
+
+**Level 6+: Sentence Mode** 🆕
+1. An English sentence with a blank appears at the top
+2. Multiple asteroids fall with different Farsi words
+3. Type the Farsi word that correctly completes the sentence
+4. More challenging - requires understanding context and grammar!
+5. New sentence appears after each correct answer
+
+**Game Over**
+- Game ends when you run out of all 3 lives
+- View your missed words in the Word Bank for study
 
 ### Level System
 The game features progressive difficulty across multiple levels:
@@ -46,7 +58,8 @@ The game features progressive difficulty across multiple levels:
 - **Level 2**: Still easy - 2 asteroids max, slower (4s spawn, 0.6 speed)
 - **Level 3**: Getting harder - 3 asteroids max, moderate (3s spawn, 0.8 speed)
 - **Level 4**: Normal difficulty - 4 asteroids max (2.5s spawn, 1.0 speed)
-- **Level 5+**: Progressive challenge - increasing speed and asteroid count
+- **Level 5**: Progressive challenge - increasing speed and asteroid count
+- **Level 6+**: **Sentence Mode** - Complete English sentences with Farsi words!
 
 ### Scoring System
 - **Base Points**: 10 points per correct answer
@@ -100,11 +113,13 @@ The game includes 35 carefully selected Farsi words covering various categories:
 
 ### Core Features
 - ✅ **Lives System**: Start with 3 lives
-- ✅ **Level System**: Progressive difficulty with 5+ levels - starts easy and gradually increases
+- ✅ **Level System**: Progressive difficulty with 6+ levels - starts easy and gradually increases
 - ✅ **Combo System**: Build up to 5x point multipliers
 - ✅ **Progressive Difficulty**: Each level introduces more asteroids and faster speeds
 - ✅ **High Score Tracking**: Uses localStorage to save your best score
 - ✅ **Pause Functionality**: Take a break anytime with spacebar or P key (won't trigger while typing!)
+- ✅ **Word Bank**: Review all missed words with translations at game over 🆕
+- ✅ **Sentence Mode**: Advanced fill-in-the-blank challenges starting at Level 6 🆕
 
 ### Visual Features
 - 🌌 **Space Theme**: Dark starfield background with animated stars
@@ -112,13 +127,16 @@ The game includes 35 carefully selected Farsi words covering various categories:
 - 🎨 **Colorful Asteroids**: Each asteroid has a unique color and rotation
 - 🚀 **Styled Spaceship**: Clean, minimalist spaceship design
 - 📊 **Clear UI**: Level, score, lives, combo, and high score always visible
+- 📚 **Word Bank Display**: Beautiful table showing missed vocabulary at game over
 
 ### Educational Features
 - 📖 **Comprehensive Vocabulary**: 35 words covering verbs, nouns, and adjectives
+- 📝 **Sentence Challenges**: 8 contextual sentence completion exercises (Level 6+)
 - 🔄 **Repetition**: Words appear randomly for reinforced learning
 - ⚡ **Quick Feedback**: Instant visual feedback on correct/incorrect answers
 - 📈 **Progress Tracking**: Watch your level and high score improve over time
 - 🎓 **Beginner Friendly**: Level 1 starts very slow with only 1 asteroid at a time
+- 📚 **Learning Aid**: Word bank shows all missed words for post-game study
 
 ## 🛠️ Technical Details
 

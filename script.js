@@ -82,7 +82,6 @@ let particles = [];
 let lastSpawnTime = 0;
 let spawnInterval = 2000; // milliseconds
 let baseSpeed = 1;
-let lastFrameTime = 0;
 
 // ===========================
 // SPACESHIP
@@ -104,7 +103,6 @@ class Asteroid {
         this.note = word.note;
         this.x = Math.random() * (canvas.width - 120) + 60;
         this.y = -50;
-        this.speed = baseSpeed + (score / 500);
         this.radius = 40;
         this.color = this.getRandomColor();
         this.rotation = Math.random() * Math.PI * 2;
@@ -128,7 +126,8 @@ class Asteroid {
     }
 
     update() {
-        this.y += this.speed;
+        const speed = baseSpeed + (score / 500);
+        this.y += speed;
         this.rotation += this.rotationSpeed;
     }
 
@@ -222,10 +221,6 @@ function gameLoop(timestamp) {
         requestAnimationFrame(gameLoop);
         return;
     }
-
-    // Delta time for consistent gameplay
-    const deltaTime = timestamp - lastFrameTime;
-    lastFrameTime = timestamp;
 
     // Clear canvas
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -460,7 +455,6 @@ function startGame() {
     
     // Start game
     gameState = 'playing';
-    lastFrameTime = performance.now();
 }
 
 // ===========================
@@ -483,7 +477,6 @@ function resumeGame() {
         pauseScreen.classList.add('hidden');
         answerInput.disabled = false;
         answerInput.focus();
-        lastFrameTime = performance.now();
     }
 }
 

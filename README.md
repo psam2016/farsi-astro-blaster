@@ -2,6 +2,10 @@
 
 An engaging, arcade-style vocabulary game for learning romanized Farsi words through fast-paced gameplay. Defend Earth by translating falling asteroids labeled with Farsi words before they reach the bottom!
 
+## 🎮 [Play Now!](https://psam2016.github.io/farsi-astro-blaster/)
+
+**▶️ [Click here to play the game online](https://psam2016.github.io/farsi-astro-blaster/)** - No installation required!
+
 ![Game Type](https://img.shields.io/badge/type-educational%20game-blue)
 ![Language](https://img.shields.io/badge/language-farsi-green)
 ![Tech](https://img.shields.io/badge/tech-HTML5%20Canvas-orange)
@@ -128,13 +132,15 @@ farsi-astro-blaster/
 
 ## 🚀 How to Run
 
-### Option 1: Local
+### ⭐ Option 1: Play Online (Recommended)
+**🌐 [Play now at https://psam2016.github.io/farsi-astro-blaster/](https://psam2016.github.io/farsi-astro-blaster/)**
+
+No installation needed! Just click the link and start playing immediately.
+
+### Option 2: Local
 1. Clone this repository
 2. Open `index.html` in a modern web browser
 3. Start playing immediately!
-
-### Option 2: GitHub Pages
-Visit the live demo: [https://psam2016.github.io/farsi-astro-blaster/](https://psam2016.github.io/farsi-astro-blaster/)
 
 ### Option 3: Local Server (optional)
 ```bash

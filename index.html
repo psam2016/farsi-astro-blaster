@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farsi Astro Blaster - Learn Romanized Farsi Vocabulary</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Title and Header -->
+        <header>
+            <h1>🚀 Farsi Astro Blaster</h1>
+            <p class="subtitle">Defend Earth by translating Farsi words!</p>
+        </header>
+
+        <!-- Game Stats Display -->
+        <div class="stats-panel">
+            <div class="stat-item">
+                <span class="stat-label">Score:</span>
+                <span class="stat-value" id="score">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Lives:</span>
+                <span class="stat-value" id="lives">❤️❤️❤️</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Combo:</span>
+                <span class="stat-value" id="combo">1x</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">High Score:</span>
+                <span class="stat-value" id="highScore">0</span>
+            </div>
+        </div>
+
+        <!-- Game Canvas -->
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            
+            <!-- Start Screen Overlay -->
+            <div id="startScreen" class="overlay">
+                <div class="overlay-content">
+                    <h2>Welcome to Farsi Astro Blaster!</h2>
+                    <div class="instructions">
+                        <h3>How to Play:</h3>
+                        <ul>
+                            <li>🎯 Asteroids fall with romanized Farsi words</li>
+                            <li>⌨️ Type the English meaning and press Enter</li>
+                            <li>🚫 Don't let asteroids reach the bottom!</li>
+                            <li>⏸️ Press Spacebar or P to pause</li>
+                            <li>🔥 Build combos for bonus points!</li>
+                        </ul>
+                    </div>
+                    <button id="startButton" class="game-button">Start Game</button>
+                </div>
+            </div>
+
+            <!-- Pause Screen Overlay -->
+            <div id="pauseScreen" class="overlay hidden">
+                <div class="overlay-content">
+                    <h2>⏸️ Game Paused</h2>
+                    <p>Press Spacebar or P to resume</p>
+                    <button id="resumeButton" class="game-button">Resume</button>
+                </div>
+            </div>
+
+            <!-- Game Over Screen Overlay -->
+            <div id="gameOverScreen" class="overlay hidden">
+                <div class="overlay-content">
+                    <h2>💥 Game Over!</h2>
+                    <p class="final-score">Final Score: <span id="finalScore">0</span></p>
+                    <p class="high-score-message" id="highScoreMessage"></p>
+                    <button id="restartButton" class="game-button">Play Again</button>
+                </div>
+            </div>
+
+            <!-- Feedback Messages -->
+            <div id="feedbackMessage" class="feedback-message hidden"></div>
+        </div>
+
+        <!-- Input Field -->
+        <div class="input-container">
+            <label for="answerInput">Type English meaning:</label>
+            <input 
+                type="text" 
+                id="answerInput" 
+                placeholder="Type answer and press Enter..."
+                autocomplete="off"
+                disabled
+            >
+        </div>
+
+        <!-- Game Info -->
+        <div class="game-info">
+            <button id="toggleInstructions" class="small-button">Show Instructions</button>
+            <div id="instructionsPanel" class="instructions-panel hidden">
+                <h3>Game Features:</h3>
+                <ul>
+                    <li><strong>Lives System:</strong> Start with 3 lives. Lose one when an asteroid reaches the bottom.</li>
+                    <li><strong>Combo System:</strong> Build combos with consecutive correct answers for bonus points!</li>
+                    <li><strong>Difficulty:</strong> Game gets faster as your score increases.</li>
+                    <li><strong>High Score:</strong> Your best score is saved automatically.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Built with ❤️ for Farsi language learners | <a href="https://github.com/psam2016/farsi-astro-blaster" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

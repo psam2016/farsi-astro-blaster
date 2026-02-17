@@ -246,6 +246,12 @@ function gameLoop(timestamp) {
 
         // Check if asteroid reached bottom
         if (asteroid.isOffScreen()) {
+            // Track missed word before removing asteroid
+            missedWords.add(JSON.stringify({
+                farsi: asteroid.word,
+                english: asteroid.english,
+                note: asteroid.note
+            }));
             asteroids.splice(i, 1);
             loseLife();
         }
@@ -425,7 +431,14 @@ function checkAnswer() {
     }
 
     if (!found) {
-        // Wrong answer
+        // Wrong answer - track all current asteroids as potentially missed
+        asteroids.forEach(asteroid => {
+            missedWords.add(JSON.stringify({
+                farsi: asteroid.word,
+                english: asteroid.english,
+                note: asteroid.note
+            }));
+        });
         combo = 0;
         showFeedback('incorrect', 'Wrong!');
     }
@@ -506,6 +519,7 @@ function startGame() {
     asteroidsDestroyed = 0;
     asteroids = [];
     particles = [];
+    missedWords = new Set(); // Reset missed words for new game
     lastSpawnTime = 0;
     
     // Get initial difficulty settings for level 1
@@ -572,8 +586,45 @@ function endGame() {
         highScoreMessage.textContent = '';
     }
     
+    // Display word bank with missed words
+    displayWordBank();
+    
     // Show game over screen
     gameOverScreen.classList.remove('hidden');
+}
+
+// ===========================
+// DISPLAY WORD BANK
+// ===========================
+function displayWordBank() {
+    const wordBankContent = document.getElementById('wordBankContent');
+    
+    if (missedWords.size === 0) {
+        wordBankContent.innerHTML = '<div class="word-bank-empty">🎉 Perfect! You didn\'t miss any words!</div>';
+        return;
+    }
+    
+    // Convert Set to array and parse JSON
+    const wordsArray = Array.from(missedWords).map(w => JSON.parse(w));
+    
+    // Sort alphabetically by Farsi word
+    wordsArray.sort((a, b) => a.farsi.localeCompare(b.farsi));
+    
+    // Create table
+    let tableHTML = '<table class="word-bank-table">';
+    tableHTML += '<thead><tr><th>Farsi</th><th>English</th><th>Notes</th></tr></thead>';
+    tableHTML += '<tbody>';
+    
+    wordsArray.forEach(word => {
+        tableHTML += '<tr>';
+        tableHTML += `<td class="word-bank-farsi">${word.farsi}</td>`;
+        tableHTML += `<td class="word-bank-english">${word.english}</td>`;
+        tableHTML += `<td class="word-bank-note">${word.note}</td>`;
+        tableHTML += '</tr>';
+    });
+    
+    tableHTML += '</tbody></table>';
+    wordBankContent.innerHTML = tableHTML;
 }
 
 // ===========================

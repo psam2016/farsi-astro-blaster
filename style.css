@@ -431,3 +431,89 @@ footer a:hover {
         font-size: 1.1em;
     }
 }
+
+/* Word Bank Styles */
+.word-bank {
+    margin: 25px 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #00d4ff;
+    border-radius: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    text-align: left;
+}
+
+.word-bank h3 {
+    color: #00ff88;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.3em;
+}
+
+.word-bank-empty {
+    text-align: center;
+    color: #00ff88;
+    font-size: 1.1em;
+    padding: 10px;
+}
+
+.word-bank-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.word-bank-table th {
+    background: rgba(0, 212, 255, 0.3);
+    color: #00d4ff;
+    padding: 10px;
+    text-align: left;
+    border-bottom: 2px solid #00d4ff;
+    font-size: 0.9em;
+    text-transform: uppercase;
+}
+
+.word-bank-table td {
+    padding: 10px;
+    border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+    color: #ffffff;
+}
+
+.word-bank-table tr:hover {
+    background: rgba(0, 212, 255, 0.1);
+}
+
+.word-bank-farsi {
+    font-weight: bold;
+    color: #ffd700;
+    font-size: 1.1em;
+}
+
+.word-bank-english {
+    color: #00ff88;
+}
+
+.word-bank-note {
+    color: #a0e7ff;
+    font-size: 0.85em;
+    font-style: italic;
+}
+
+/* Scrollbar styling for word bank */
+.word-bank::-webkit-scrollbar {
+    width: 8px;
+}
+
+.word-bank::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.word-bank::-webkit-scrollbar-thumb {
+    background: #00d4ff;
+    border-radius: 4px;
+}
+
+.word-bank::-webkit-scrollbar-thumb:hover {
+    background: #00ff88;
+}

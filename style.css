@@ -566,3 +566,90 @@ footer a:hover {
     text-decoration-color: #ffd700;
     font-weight: bold;
 }
+
+/* Difficulty Selection Styles */
+.difficulty-selection {
+    margin: 25px 0;
+}
+
+.difficulty-selection h3 {
+    color: #ffd700;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.difficulty-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.difficulty-btn {
+    background: rgba(0, 0, 0, 0.6);
+    border: 3px solid #00d4ff;
+    color: #ffffff;
+    padding: 15px 25px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    min-width: 150px;
+    text-align: center;
+}
+
+.difficulty-btn:hover {
+    background: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 212, 255, 0.5);
+}
+
+.difficulty-btn.active {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.2);
+    box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+}
+
+.difficulty-desc {
+    display: block;
+    font-size: 0.75em;
+    font-weight: normal;
+    color: #a0e7ff;
+    margin-top: 5px;
+}
+
+/* Game Options Styles */
+.game-options {
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 8px;
+    border: 2px solid rgba(0, 212, 255, 0.3);
+}
+
+.game-options h3 {
+    color: #00d4ff;
+    margin-bottom: 12px;
+    font-size: 1.1em;
+}
+
+.option-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    color: #ffffff;
+    font-size: 1em;
+}
+
+.option-checkbox input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #00ff88;
+}
+
+.option-checkbox:hover {
+    color: #00ff88;
+}

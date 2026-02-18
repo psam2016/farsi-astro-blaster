@@ -154,6 +154,8 @@ const sentences = [
 let gameState = 'start'; // start, playing, paused, gameOver
 let gameMode = 'translate'; // 'translate' or 'sentence'
 let currentSentence = null;
+let difficulty = localStorage.getItem('farsiDifficulty') || 'normal'; // easy, normal, hard
+let sentenceModeEnabled = localStorage.getItem('farsiSentenceMode') === 'true';
 let score = 0;
 let lives = 3;
 let combo = 0;
@@ -410,8 +412,8 @@ function updateLevel() {
         level = newLevel;
         levelDisplay.textContent = level;
         
-        // Switch to sentence mode at level 6
-        if (level >= 6 && gameMode === 'translate') {
+        // Switch to sentence mode at level 6 (only if enabled)
+        if (sentenceModeEnabled && level >= 6 && gameMode === 'translate') {
             gameMode = 'sentence';
             showFeedback('correct', `Level ${level}! 🎊 Sentence Mode!`);
             showSentenceDisplay();
@@ -423,38 +425,64 @@ function updateLevel() {
 }
 
 function getDifficultySettings() {
-    // Progressive difficulty based on level
+    // Progressive difficulty based on level - optimized for A1 learners
     let settings = {
-        spawnInterval: 4000,  // Default: very slow
-        baseSpeed: 0.5,       // Default: very slow
+        spawnInterval: 6000,  // Default: very slow
+        baseSpeed: 0.3,       // Default: very slow
         maxAsteroids: 1       // Default: only 1 at a time
     };
     
     if (level === 1) {
-        // Level 1: Tutorial - very easy
-        settings.spawnInterval = 5000;  // 5 seconds between spawns
-        settings.baseSpeed = 0.4;
+        // Level 1: Complete beginner - extremely easy
+        settings.spawnInterval = 8000;  // 8 seconds between spawns
+        settings.baseSpeed = 0.25;      // Very slow movement
         settings.maxAsteroids = 1;
     } else if (level === 2) {
-        // Level 2: Still easy
-        settings.spawnInterval = 4000;
+        // Level 2: Still learning - very easy
+        settings.spawnInterval = 7000;
+        settings.baseSpeed = 0.3;
+        settings.maxAsteroids = 1;      // Keep it to 1 asteroid
+    } else if (level === 3) {
+        // Level 3: Building confidence - easy
+        settings.spawnInterval = 6000;
+        settings.baseSpeed = 0.4;
+        settings.maxAsteroids = 1;      // Still just 1
+    } else if (level === 4) {
+        // Level 4: Ready for more - moderate
+        settings.spawnInterval = 5000;
+        settings.baseSpeed = 0.5;
+        settings.maxAsteroids = 2;      // Now introduce 2 asteroids
+    } else if (level === 5) {
+        // Level 5: Getting comfortable
+        settings.spawnInterval = 4500;
         settings.baseSpeed = 0.6;
         settings.maxAsteroids = 2;
-    } else if (level === 3) {
-        // Level 3: Getting harder
-        settings.spawnInterval = 3000;
+    } else if (level === 6) {
+        // Level 6: Sentence mode begins (if enabled)
+        settings.spawnInterval = 4000;
+        settings.baseSpeed = 0.7;
+        settings.maxAsteroids = 2;
+    } else if (level === 7) {
+        // Level 7: Intermediate
+        settings.spawnInterval = 3500;
         settings.baseSpeed = 0.8;
         settings.maxAsteroids = 3;
-    } else if (level === 4) {
-        // Level 4: Moderate
-        settings.spawnInterval = 2500;
-        settings.baseSpeed = 1.0;
-        settings.maxAsteroids = 4;
     } else {
-        // Level 5+: Progressive difficulty
-        settings.spawnInterval = Math.max(1000, 2500 - ((level - 4) * 200));
-        settings.baseSpeed = 1.0 + ((level - 4) * 0.2);
-        settings.maxAsteroids = Math.min(6, 4 + Math.floor((level - 4) / 2));
+        // Level 8+: Progressive difficulty (much slower progression than before)
+        settings.spawnInterval = Math.max(2000, 3500 - ((level - 7) * 150));
+        settings.baseSpeed = 0.8 + ((level - 7) * 0.1);
+        settings.maxAsteroids = Math.min(4, 3 + Math.floor((level - 7) / 3));
+    }
+    
+    // Apply difficulty modifier
+    if (difficulty === 'easy') {
+        settings.spawnInterval *= 1.5;  // 50% more time
+        settings.baseSpeed *= 0.7;      // 30% slower
+        settings.maxAsteroids = Math.max(1, settings.maxAsteroids - 1);
+    } else if (difficulty === 'hard') {
+        settings.spawnInterval *= 0.7;  // 30% less time
+        settings.baseSpeed *= 1.4;      // 40% faster
+        settings.maxAsteroids += 1;
     }
     
     return settings;
@@ -824,8 +852,45 @@ toggleInstructions.addEventListener('click', () => {
         : 'Hide Instructions';
 });
 
+// Difficulty selection
+document.querySelectorAll('.difficulty-btn').forEach(btn => {
+    btn.addEventListener('click', function() {
+        // Remove active class from all buttons
+        document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+        // Add active class to clicked button
+        this.classList.add('active');
+        // Update difficulty setting
+        difficulty = this.getAttribute('data-difficulty');
+        localStorage.setItem('farsiDifficulty', difficulty);
+    });
+});
+
+// Sentence mode toggle
+const sentenceModeToggle = document.getElementById('sentenceModeToggle');
+if (sentenceModeToggle) {
+    // Set initial state from localStorage
+    sentenceModeToggle.checked = sentenceModeEnabled;
+    
+    sentenceModeToggle.addEventListener('change', function() {
+        sentenceModeEnabled = this.checked;
+        localStorage.setItem('farsiSentenceMode', sentenceModeEnabled);
+    });
+}
+
 // ===========================
 // INITIALIZE AND START
 // ===========================
+// Set initial difficulty button state
+document.addEventListener('DOMContentLoaded', () => {
+    const savedDifficulty = localStorage.getItem('farsiDifficulty') || 'normal';
+    document.querySelectorAll('.difficulty-btn').forEach(btn => {
+        if (btn.getAttribute('data-difficulty') === savedDifficulty) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+});
+
 init();
 requestAnimationFrame(gameLoop);

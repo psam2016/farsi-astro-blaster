@@ -23,6 +23,15 @@ Farsi Astro Blaster is an educational arcade game that combines fast-paced actio
 
 ## 🕹️ How to Play
 
+### Difficulty Selection 🆕
+Choose your difficulty level before starting:
+- **🌱 Easy**: Perfect for A1 beginners - Much slower asteroids, more time to think (12s spawn interval, only 1 asteroid)
+- **⭐ Normal**: Balanced challenge for intermediate learners
+- **🔥 Hard**: Fast-paced action for advanced players
+
+### Practice Options 🆕
+- **Sentence Mode**: Optional advanced practice where you complete English sentences with Farsi words (activates at Level 6 if enabled)
+
 ### Controls
 - **Type**: Enter the English meaning of the Farsi word shown on asteroids
 - **Enter**: Submit your answer and destroy matching asteroids
@@ -51,15 +60,17 @@ Farsi Astro Blaster is an educational arcade game that combines fast-paced actio
 - Game ends when you run out of all 3 lives
 - View your missed words in the Word Bank for study
 
-### Level System
-The game features progressive difficulty across multiple levels:
+### Level System (Normal Difficulty)
+The game features progressive difficulty across multiple levels - designed for A1 learners:
 
-- **Level 1**: Tutorial - 1 asteroid at a time, very slow (5s spawn interval, 0.4 speed)
-- **Level 2**: Still easy - 2 asteroids max, slower (4s spawn, 0.6 speed)
-- **Level 3**: Getting harder - 3 asteroids max, moderate (3s spawn, 0.8 speed)
-- **Level 4**: Normal difficulty - 4 asteroids max (2.5s spawn, 1.0 speed)
-- **Level 5**: Progressive challenge - increasing speed and asteroid count
-- **Level 6+**: **Sentence Mode** - Complete English sentences with Farsi words!
+- **Level 1**: Complete beginner - 1 asteroid, extremely slow (8s spawn, 0.25 speed) 🆕
+- **Level 2**: Still learning - 1 asteroid, very slow (7s spawn, 0.3 speed) 🆕
+- **Level 3**: Building confidence - 1 asteroid, slow (6s spawn, 0.4 speed) 🆕
+- **Level 4**: Ready for more - 2 asteroids, moderate (5s spawn, 0.5 speed)
+- **Level 5**: Getting comfortable - 2 asteroids (4.5s spawn, 0.6 speed)
+- **Level 6**: Sentence mode begins (if enabled) - 2 asteroids (4s spawn, 0.7 speed)
+- **Level 7**: Intermediate - 3 asteroids (3.5s spawn, 0.8 speed)
+- **Level 8+**: Progressive challenge - gradual difficulty increase (max 4 asteroids)
 
 ### Scoring System
 - **Base Points**: 10 points per correct answer
@@ -112,14 +123,15 @@ The game includes 35 carefully selected Farsi words covering various categories:
 ## ✨ Features
 
 ### Core Features
+- ✅ **3 Difficulty Levels**: Easy (perfect for A1), Normal, Hard - choose your challenge! 🆕
 - ✅ **Lives System**: Start with 3 lives
-- ✅ **Level System**: Progressive difficulty with 6+ levels - starts easy and gradually increases
+- ✅ **Level System**: 8+ progressive levels - starts very easy for beginners 🆕
 - ✅ **Combo System**: Build up to 5x point multipliers
-- ✅ **Progressive Difficulty**: Each level introduces more asteroids and faster speeds
+- ✅ **Much Slower for Beginners**: Level 1-3 keep only 1 asteroid with extended time 🆕
 - ✅ **High Score Tracking**: Uses localStorage to save your best score
 - ✅ **Pause Functionality**: Take a break anytime with spacebar or P key (won't trigger while typing!)
-- ✅ **Word Bank**: Review all missed words with translations at game over 🆕
-- ✅ **Sentence Mode**: Advanced fill-in-the-blank challenges starting at Level 6 🆕
+- ✅ **Word Bank**: Review all missed words with translations at game over
+- ✅ **Optional Sentence Mode**: Choose to include advanced sentence practice 🆕
 
 ### Visual Features
 - 🌌 **Space Theme**: Dark starfield background with animated stars
@@ -128,15 +140,17 @@ The game includes 35 carefully selected Farsi words covering various categories:
 - 🚀 **Styled Spaceship**: Clean, minimalist spaceship design
 - 📊 **Clear UI**: Level, score, lives, combo, and high score always visible
 - 📚 **Word Bank Display**: Beautiful table showing missed vocabulary at game over
+- 🎛️ **Customizable Start Screen**: Select difficulty and practice options 🆕
 
 ### Educational Features
 - 📖 **Comprehensive Vocabulary**: 35 words covering verbs, nouns, and adjectives
-- 📝 **Sentence Challenges**: 8 contextual sentence completion exercises (Level 6+)
+- 📝 **Sentence Challenges**: 8 contextual sentence completion exercises (optional)
 - 🔄 **Repetition**: Words appear randomly for reinforced learning
 - ⚡ **Quick Feedback**: Instant visual feedback on correct/incorrect answers
 - 📈 **Progress Tracking**: Watch your level and high score improve over time
-- 🎓 **Beginner Friendly**: Level 1 starts very slow with only 1 asteroid at a time
+- 🎓 **Beginner Friendly**: Easy mode designed specifically for A1 learners 🆕
 - 📚 **Learning Aid**: Word bank shows all missed words for post-game study
+- 🎯 **Customizable Practice**: Choose your difficulty and practice modes 🆕
 
 ## 🛠️ Technical Details
 

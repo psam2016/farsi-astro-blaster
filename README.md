@@ -31,12 +31,25 @@ Choose your difficulty level before starting:
 
 ### Practice Options 🆕
 - **Sentence Mode**: Optional advanced practice where you complete English sentences with Farsi words (activates at Level 6 if enabled)
+- **Learning Hints** 💡: Enable contextual hints and grammar tips (recommended for beginners)
 
 ### Controls
 - **Type**: Enter the English meaning of the Farsi word shown on asteroids
 - **Enter**: Submit your answer and destroy matching asteroids
 - **Spacebar/P**: Pause and resume the game
+- **H Key**: Toggle hint panel (when not typing in input field)
+- **Click "Show Hint"**: Get progressive hints for the current word
 - **Click "Start Game"**: Begin a new game
+
+### Learning Hints System 💡 🆕
+When hints are enabled, you get contextual learning support:
+1. **Grammar Tips**: Educational tips appear at the top when asteroids spawn (e.g., "mi- prefix = present tense")
+2. **Progressive Hints**: Click "Show Hint" button or press H key for help:
+   - **Level 1**: Shows grammar note (e.g., "imperative form")
+   - **Level 2**: Shows first letter of English word (e.g., "T___")
+   - **Level 3**: Shows full English translation
+3. **Educational Context**: Learn Farsi patterns and grammar rules while waiting for asteroids
+4. Perfect for beginners who need extra support without pressure
 
 ### Gameplay
 
@@ -132,6 +145,7 @@ The game includes 35 carefully selected Farsi words covering various categories:
 - ✅ **Pause Functionality**: Take a break anytime with spacebar or P key (won't trigger while typing!)
 - ✅ **Word Bank**: Review all missed words with translations at game over
 - ✅ **Optional Sentence Mode**: Choose to include advanced sentence practice 🆕
+- ✅ **Learning Hints** 💡: Progressive hints and grammar tips for contextual learning 🆕
 
 ### Visual Features
 - 🌌 **Space Theme**: Dark starfield background with animated stars
@@ -141,16 +155,21 @@ The game includes 35 carefully selected Farsi words covering various categories:
 - 📊 **Clear UI**: Level, score, lives, combo, and high score always visible
 - 📚 **Word Bank Display**: Beautiful table showing missed vocabulary at game over
 - 🎛️ **Customizable Start Screen**: Select difficulty and practice options 🆕
+- 💡 **Hint Panel**: Gold-bordered learning helper with progressive hints 🆕
+- 📖 **Grammar Tips**: Educational tips displayed at top of screen 🆕
 
 ### Educational Features
 - 📖 **Comprehensive Vocabulary**: 35 words covering verbs, nouns, and adjectives
 - 📝 **Sentence Challenges**: 8 contextual sentence completion exercises (optional)
+- 💡 **Progressive Hints**: Three-level hint system (grammar → first letter → full answer) 🆕
+- 📚 **Grammar Tips**: 10 rotating educational tips about Farsi patterns 🆕
 - 🔄 **Repetition**: Words appear randomly for reinforced learning
 - ⚡ **Quick Feedback**: Instant visual feedback on correct/incorrect answers
 - 📈 **Progress Tracking**: Watch your level and high score improve over time
 - 🎓 **Beginner Friendly**: Easy mode designed specifically for A1 learners 🆕
 - 📚 **Learning Aid**: Word bank shows all missed words for post-game study
 - 🎯 **Customizable Practice**: Choose your difficulty and practice modes 🆕
+- 🧠 **Contextual Learning**: Learn grammar rules and patterns while playing 🆕
 
 ## 🛠️ Technical Details
 

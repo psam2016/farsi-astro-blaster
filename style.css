@@ -653,3 +653,149 @@ footer a:hover {
 .option-checkbox:hover {
     color: #00ff88;
 }
+
+/* Hint Panel Styles */
+.hint-panel {
+    position: absolute;
+    bottom: 80px;
+    right: 20px;
+    width: 320px;
+    background: rgba(0, 0, 0, 0.9);
+    border: 3px solid #ffd700;
+    border-radius: 12px;
+    padding: 15px;
+    box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+    z-index: 100;
+}
+
+.hint-panel.hidden {
+    display: none;
+}
+
+.hint-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid rgba(255, 215, 0, 0.3);
+}
+
+.hint-title {
+    color: #ffd700;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.hint-content {
+    color: #ffffff;
+    font-size: 1em;
+    line-height: 1.6;
+    min-height: 60px;
+    margin-bottom: 12px;
+    padding: 10px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 6px;
+}
+
+.hint-content .hint-grammar {
+    color: #00ff88;
+    font-style: italic;
+    margin-bottom: 8px;
+}
+
+.hint-content .hint-letter {
+    color: #ffd700;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.hint-content .hint-answer {
+    color: #ff6b6b;
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.hint-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.hint-button {
+    flex: 1;
+    background: linear-gradient(135deg, #ffd700, #ffed4e);
+    color: #000;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.95em;
+}
+
+.hint-button:hover {
+    background: linear-gradient(135deg, #ffed4e, #ffd700);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4);
+}
+
+.hint-button:active {
+    transform: translateY(0);
+}
+
+.hint-button-close {
+    background: rgba(255, 107, 107, 0.3);
+    color: #ff6b6b;
+    border: 2px solid #ff6b6b;
+    padding: 10px 15px;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.hint-button-close:hover {
+    background: rgba(255, 107, 107, 0.5);
+    transform: scale(1.1);
+}
+
+/* Grammar Tip Display */
+.grammar-tip {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(0, 255, 136, 0.15);
+    border: 2px solid #00ff88;
+    border-radius: 8px;
+    padding: 12px 20px;
+    color: #00ff88;
+    font-size: 0.95em;
+    max-width: 600px;
+    text-align: center;
+    box-shadow: 0 4px 15px rgba(0, 255, 136, 0.3);
+    z-index: 50;
+    animation: tipFadeIn 0.5s ease;
+}
+
+.grammar-tip.hidden {
+    display: none;
+}
+
+@keyframes tipFadeIn {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+#grammarTipText {
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}

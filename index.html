@@ -77,6 +77,10 @@
                             <input type="checkbox" id="sentenceModeToggle">
                             <span>Include Sentence Mode (Advanced)</span>
                         </label>
+                        <label class="option-checkbox">
+                            <input type="checkbox" id="hintsToggle" checked>
+                            <span>Enable Learning Hints 💡 (Recommended for beginners)</span>
+                        </label>
                     </div>
                     
                     <div class="instructions">
@@ -87,6 +91,7 @@
                             <li>🚫 Don't let asteroids reach the bottom!</li>
                             <li>⏸️ Press Spacebar or P to pause</li>
                             <li>🔥 Build combos for bonus points!</li>
+                            <li>💡 Click "Show Hint" for help (grammar tips, first letter, etc.)</li>
                         </ul>
                     </div>
                     <button id="startButton" class="game-button">Start Game</button>
@@ -121,6 +126,23 @@
 
             <!-- Feedback Messages -->
             <div id="feedbackMessage" class="feedback-message hidden"></div>
+            
+            <!-- Hint Panel -->
+            <div id="hintPanel" class="hint-panel hidden">
+                <div class="hint-header">
+                    <span class="hint-title">💡 Learning Helper</span>
+                </div>
+                <div id="hintContent" class="hint-content"></div>
+                <div class="hint-buttons">
+                    <button id="showHintButton" class="hint-button">Show Hint</button>
+                    <button id="closeHintButton" class="hint-button-close">✕</button>
+                </div>
+            </div>
+            
+            <!-- Grammar Tip Display -->
+            <div id="grammarTipDisplay" class="grammar-tip hidden">
+                <span id="grammarTipText"></span>
+            </div>
         </div>
 
         <!-- Input Field -->

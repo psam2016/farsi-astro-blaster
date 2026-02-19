@@ -149,6 +149,22 @@ const sentences = [
 ];
 
 // ===========================
+// GRAMMAR TIPS & LEARNING CONTENT
+// ===========================
+const grammarTips = [
+    "💡 Tip: The 'mi-' prefix indicates present tense (e.g., miram = I go)",
+    "💡 Tip: Imperative verbs often start with 'be-' (e.g., bego = say!)",
+    "💡 Tip: Past tense verbs often end in '-dam', '-di', or '-d'",
+    "💡 Tip: '-an' ending often indicates infinitive form (e.g., raftan = to go)",
+    "💡 Tip: Many Farsi nouns are short and simple (e.g., āb = water, del = heart)",
+    "💡 Tip: Adjectives like 'sard' (cold) and 'garm' (hot) are opposites",
+    "💡 Tip: Verbs conjugate by person - 'am/m' for 'I', 'i' for 'you'",
+    "💡 Tip: Long vowels are shown with 'ā' (e.g., āsemān = sky)",
+    "💡 Tip: 'sh' sound is common in Farsi (e.g., shab = night)",
+    "💡 Tip: Natural words: āb (water), ātash (fire), bād (wind), khāk (earth)"
+];
+
+// ===========================
 // GAME STATE
 // ===========================
 let gameState = 'start'; // start, playing, paused, gameOver
@@ -156,6 +172,10 @@ let gameMode = 'translate'; // 'translate' or 'sentence'
 let currentSentence = null;
 let difficulty = localStorage.getItem('farsiDifficulty') || 'normal'; // easy, normal, hard
 let sentenceModeEnabled = localStorage.getItem('farsiSentenceMode') === 'true';
+let hintsEnabled = localStorage.getItem('farsiHintsEnabled') !== 'false'; // default true
+let currentHintLevel = 0; // 0 = no hint, 1 = grammar, 2 = first letter, 3 = full answer
+let currentGrammarTip = '';
+let grammarTipIndex = 0;
 let score = 0;
 let lives = 3;
 let combo = 0;
@@ -514,6 +534,14 @@ function spawnAsteroid() {
     // Update difficulty settings based on level
     spawnInterval = settings.spawnInterval;
     baseSpeed = settings.baseSpeed;
+    
+    // Show a grammar tip when asteroid spawns (if hints enabled and in easy/normal mode)
+    if (hintsEnabled && (difficulty === 'easy' || difficulty === 'normal')) {
+        showGrammarTip();
+    }
+    
+    // Reset hint level for new asteroid
+    resetHints();
 }
 
 // ===========================
@@ -545,6 +573,95 @@ function hideSentenceDisplay() {
     const inputLabel = document.getElementById('inputLabel');
     sentenceDisplay.classList.add('hidden');
     inputLabel.textContent = 'Type English meaning:';
+}
+
+// ===========================
+// HINT SYSTEM FUNCTIONS
+// ===========================
+function showHintPanel() {
+    if (!hintsEnabled || asteroids.length === 0) return;
+    
+    const hintPanel = document.getElementById('hintPanel');
+    hintPanel.classList.remove('hidden');
+    updateHintContent();
+}
+
+function hideHintPanel() {
+    const hintPanel = document.getElementById('hintPanel');
+    hintPanel.classList.add('hidden');
+}
+
+function updateHintContent() {
+    const hintContent = document.getElementById('hintContent');
+    
+    if (asteroids.length === 0) {
+        hintContent.innerHTML = '<p>No asteroids on screen! Wait for the next one.</p>';
+        return;
+    }
+    
+    // Get the first asteroid (oldest one on screen)
+    const currentAsteroid = asteroids[0];
+    
+    if (currentHintLevel === 0) {
+        hintContent.innerHTML = '<p>Click "Show Hint" to get help with this word!</p>';
+    } else if (currentHintLevel === 1) {
+        // Show grammar note
+        hintContent.innerHTML = `<div class="hint-grammar">📖 Grammar: ${currentAsteroid.note}</div>`;
+    } else if (currentHintLevel === 2) {
+        // Show first letter
+        const firstLetter = currentAsteroid.english.charAt(0).toUpperCase();
+        hintContent.innerHTML = `
+            <div class="hint-grammar">📖 Grammar: ${currentAsteroid.note}</div>
+            <div class="hint-letter">First letter: ${firstLetter}___</div>
+        `;
+    } else if (currentHintLevel >= 3) {
+        // Show full answer
+        hintContent.innerHTML = `
+            <div class="hint-grammar">📖 Grammar: ${currentAsteroid.note}</div>
+            <div class="hint-answer">Answer: ${currentAsteroid.english}</div>
+        `;
+    }
+}
+
+function nextHint() {
+    if (asteroids.length === 0) return;
+    
+    currentHintLevel++;
+    if (currentHintLevel > 3) currentHintLevel = 3; // Cap at full answer
+    
+    updateHintContent();
+}
+
+function resetHints() {
+    currentHintLevel = 0;
+    const hintPanel = document.getElementById('hintPanel');
+    if (!hintPanel.classList.contains('hidden')) {
+        updateHintContent();
+    }
+}
+
+function showGrammarTip() {
+    if (!hintsEnabled) return;
+    
+    const grammarTipDisplay = document.getElementById('grammarTipDisplay');
+    const grammarTipText = document.getElementById('grammarTipText');
+    
+    // Rotate through grammar tips
+    currentGrammarTip = grammarTips[grammarTipIndex];
+    grammarTipIndex = (grammarTipIndex + 1) % grammarTips.length;
+    
+    grammarTipText.textContent = currentGrammarTip;
+    grammarTipDisplay.classList.remove('hidden');
+    
+    // Auto-hide after 8 seconds
+    setTimeout(() => {
+        grammarTipDisplay.classList.add('hidden');
+    }, 8000);
+}
+
+function hideGrammarTip() {
+    const grammarTipDisplay = document.getElementById('grammarTipDisplay');
+    grammarTipDisplay.classList.add('hidden');
 }
 
 // ===========================
@@ -591,6 +708,9 @@ function checkAnswer() {
             
             // Show feedback
             showFeedback('correct', `+${points} points!`);
+            
+            // Reset hints for next asteroid
+            resetHints();
             
             // In sentence mode, select a new sentence after correct answer
             if (gameMode === 'sentence') {
@@ -710,6 +830,15 @@ function startGame() {
     startScreen.classList.add('hidden');
     pauseScreen.classList.add('hidden');
     gameOverScreen.classList.add('hidden');
+    
+    // Show hint panel if hints are enabled
+    if (hintsEnabled) {
+        showHintPanel();
+    }
+    
+    // Reset hint state
+    resetHints();
+    hideGrammarTip();
     
     // Enable input
     answerInput.disabled = false;
@@ -876,6 +1005,49 @@ if (sentenceModeToggle) {
         localStorage.setItem('farsiSentenceMode', sentenceModeEnabled);
     });
 }
+
+// Hints toggle
+const hintsToggle = document.getElementById('hintsToggle');
+if (hintsToggle) {
+    // Set initial state from localStorage
+    hintsToggle.checked = hintsEnabled;
+    
+    hintsToggle.addEventListener('change', function() {
+        hintsEnabled = this.checked;
+        localStorage.setItem('farsiHintsEnabled', hintsEnabled);
+    });
+}
+
+// Hint button event listeners
+const showHintButton = document.getElementById('showHintButton');
+const closeHintButton = document.getElementById('closeHintButton');
+
+if (showHintButton) {
+    showHintButton.addEventListener('click', () => {
+        nextHint();
+    });
+}
+
+if (closeHintButton) {
+    closeHintButton.addEventListener('click', () => {
+        hideHintPanel();
+    });
+}
+
+// Keyboard shortcut for hints (H key)
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'h' || e.key === 'H') {
+        if (gameState === 'playing' && document.activeElement !== answerInput) {
+            e.preventDefault();
+            const hintPanel = document.getElementById('hintPanel');
+            if (hintPanel.classList.contains('hidden')) {
+                showHintPanel();
+            } else {
+                nextHint();
+            }
+        }
+    }
+});
 
 // ===========================
 // INITIALIZE AND START

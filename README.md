@@ -1,5 +1,7 @@
 # 🚀 Farsi Astro Blaster
 
+![Game Icon](icon.jpg)
+
 An engaging, arcade-style vocabulary game for learning romanized Farsi words through fast-paced gameplay. Defend Earth by translating falling asteroids labeled with Farsi words before they reach the bottom!
 
 ## 🎮 [Play Now!](https://psam2016.github.io/farsi-astro-blaster/)

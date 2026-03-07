@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Farsi Astro Blaster - Learn Romanized Farsi Vocabulary</title>
+    <link rel="icon" type="image/jpeg" href="icon-256.jpg">
+    <meta property="og:url" content="https://psam2016.github.io/farsi-astro-blaster/">
+    <meta property="og:image" content="https://psam2016.github.io/farsi-astro-blaster/icon.jpg">
+    <meta property="og:title" content="Farsi Astro Blaster - Learn Romanized Farsi">
+    <meta property="og:description" content="Educational arcade game for learning romanized Farsi vocabulary">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-container">
+        <!-- Title and Header -->
+        <header>
+            <h1>🚀 Farsi Astro Blaster</h1>
+            <p class="subtitle">Defend Earth by translating Farsi words!</p>
+        </header>
+
+        <!-- Game Stats Display -->
+        <div class="stats-panel">
+            <div class="stat-item">
+                <span class="stat-label">Level:</span>
+                <span class="stat-value" id="level">1</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Score:</span>
+                <span class="stat-value" id="score">0</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Lives:</span>
+                <span class="stat-value" id="lives">❤️❤️❤️</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">Combo:</span>
+                <span class="stat-value" id="combo">1x</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-label">High Score:</span>
+                <span class="stat-value" id="highScore">0</span>
+            </div>
+        </div>
+
+        <!-- Sentence Mode Display (shown only in sentence mode) -->
+        <div id="sentenceDisplay" class="sentence-display hidden">
+            <p class="sentence-label">Complete the sentence:</p>
+            <p class="sentence-text" id="sentenceText"></p>
+            <p class="sentence-hint">Type the Farsi word that fits the blank</p>
+        </div>
+
+        <!-- Game Canvas -->
+        <div class="canvas-wrapper">
+            <canvas id="gameCanvas" width="800" height="600"></canvas>
+            
+            <!-- Start Screen Overlay -->
+            <div id="startScreen" class="overlay">
+                <div class="overlay-content">
+                    <h2>Welcome to Farsi Astro Blaster!</h2>
+                    
+                    <!-- Difficulty Selection -->
+                    <div class="difficulty-selection">
+                        <h3>Choose Difficulty:</h3>
+                        <div class="difficulty-buttons">
+                            <button class="difficulty-btn" data-difficulty="easy">
+                                🌱 Easy<br><span class="difficulty-desc">Perfect for beginners</span>
+                            </button>
+                            <button class="difficulty-btn active" data-difficulty="normal">
+                                ⭐ Normal<br><span class="difficulty-desc">Balanced challenge</span>
+                            </button>
+                            <button class="difficulty-btn" data-difficulty="hard">
+                                🔥 Hard<br><span class="difficulty-desc">For experts</span>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Game Mode Options -->
+                    <div class="game-options">
+                        <h3>Practice Options:</h3>
+                        <label class="option-checkbox">
+                            <input type="checkbox" id="sentenceModeToggle">
+                            <span>Include Sentence Mode (Advanced)</span>
+                        </label>
+                        <label class="option-checkbox">
+                            <input type="checkbox" id="hintsToggle" checked>
+                            <span>Enable Learning Hints 💡 (Recommended for beginners)</span>
+                        </label>
+                    </div>
+                    
+                    <div class="instructions">
+                        <h3>How to Play:</h3>
+                        <ul>
+                            <li>🎯 Asteroids fall with romanized Farsi words</li>
+                            <li>⌨️ Type the English meaning and press Enter</li>
+                            <li>🚫 Don't let asteroids reach the bottom!</li>
+                            <li>⏸️ Press Spacebar or P to pause</li>
+                            <li>🔥 Build combos for bonus points!</li>
+                            <li>💡 Click "Show Hint" for help (grammar tips, first letter, etc.)</li>
+                        </ul>
+                    </div>
+                    <button id="startButton" class="game-button">Start Game</button>
+                </div>
+            </div>
+
+            <!-- Pause Screen Overlay -->
+            <div id="pauseScreen" class="overlay hidden">
+                <div class="overlay-content">
+                    <h2>⏸️ Game Paused</h2>
+                    <p>Press Spacebar or P to resume</p>
+                    <button id="resumeButton" class="game-button">Resume</button>
+                </div>
+            </div>
+
+            <!-- Game Over Screen Overlay -->
+            <div id="gameOverScreen" class="overlay hidden">
+                <div class="overlay-content">
+                    <h2>💥 Game Over!</h2>
+                    <p class="final-score">Final Score: <span id="finalScore">0</span></p>
+                    <p class="high-score-message" id="highScoreMessage"></p>
+                    
+                    <!-- Word Bank Section -->
+                    <div id="wordBank" class="word-bank">
+                        <h3>📚 Words to Study</h3>
+                        <div id="wordBankContent"></div>
+                    </div>
+                    
+                    <button id="restartButton" class="game-button">Play Again</button>
+                </div>
+            </div>
+
+            <!-- Feedback Messages -->
+            <div id="feedbackMessage" class="feedback-message hidden"></div>
+            
+            <!-- Hint Panel -->
+            <div id="hintPanel" class="hint-panel hidden">
+                <div class="hint-header">
+                    <span class="hint-title">💡 Learning Helper</span>
+                </div>
+                <div id="hintContent" class="hint-content"></div>
+                <div class="hint-buttons">
+                    <button id="showHintButton" class="hint-button">Show Hint</button>
+                    <button id="closeHintButton" class="hint-button-close">✕</button>
+                </div>
+            </div>
+            
+            <!-- Grammar Tip Display -->
+            <div id="grammarTipDisplay" class="grammar-tip hidden">
+                <span id="grammarTipText"></span>
+            </div>
+        </div>
+
+        <!-- Input Field -->
+        <div class="input-container">
+            <label for="answerInput" id="inputLabel">Type English meaning:</label>
+            <input 
+                type="text" 
+                id="answerInput" 
+                placeholder="Type answer and press Enter..."
+                autocomplete="off"
+                disabled
+            >
+        </div>
+
+        <!-- Game Info -->
+        <div class="game-info">
+            <button id="toggleInstructions" class="small-button">Show Instructions</button>
+            <div id="instructionsPanel" class="instructions-panel hidden">
+                <h3>Game Features:</h3>
+                <ul>
+                    <li><strong>Lives System:</strong> Start with 3 lives. Lose one when an asteroid reaches the bottom.</li>
+                    <li><strong>Combo System:</strong> Build combos with consecutive correct answers for bonus points!</li>
+                    <li><strong>Difficulty:</strong> Game gets faster as your score increases.</li>
+                    <li><strong>High Score:</strong> Your best score is saved automatically.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>Built with ❤️ for Farsi language learners | <a href="https://github.com/psam2016/farsi-astro-blaster" target="_blank" rel="noopener noreferrer">GitHub</a></p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
